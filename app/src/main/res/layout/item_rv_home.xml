@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/corner"
+              android:padding="10dp"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:textSize="20sp"
+        android:gravity="center"
+        android:id="@+id/tv_item_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:id="@+id/tv_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:id="@+id/tv_item_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="#9e9e9e"/>
+
+</LinearLayout>

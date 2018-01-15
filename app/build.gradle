@@ -1,0 +1,161 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.sbkj.shunbaowallet.rxjava_lvxingxing"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    def keystoreFilepath = ''
+
+    def keystorePSW = ''
+    def keystoreAlias = ''
+    def keystoreAliasPSW = ''
+// default keystore file, PLZ config file path in local.properties
+    def keyfile = file('s.keystore.temp')
+
+    Properties properties = new Properties()
+// local.properties file in the root director
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    keystoreFilepath = properties.getProperty("keystore.path")
+
+    if (keystoreFilepath) {
+        keystorePSW = properties.getProperty("keystore.password")
+        keystoreAlias = properties.getProperty("keystore.alias")
+        keystoreAliasPSW = properties.getProperty("keystore.alias_password")
+        keyfile = file(keystoreFilepath)
+    }
+
+    signingConfigs{
+        whatf.initWith(signingConfigs.debug)
+
+        release{
+            storeFile keyfile
+            storePassword keystorePSW
+            keyAlias keystoreAlias
+            keyPassword keystoreAliasPSW
+        }
+    }
+
+
+    buildTypes {
+        whatf.initWith(buildTypes.release)
+        whatf{
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            debuggable = false
+            multiDexEnabled true
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            buildConfigField "boolean","IS_SHOW_LOG","false"
+            buildConfigField "String","BASEURL","\"realsesssssssssssssssssssssssssssss\""
+            minifyEnabled false
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            buildConfigField "String","BASEURL","\"debugsssssssssssssssssssssssssssss\""
+            buildConfigField "boolean","IS_SHOW_LOG","true"
+            minifyEnabled false
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+    productFlavors{
+        red{
+
+        }
+        blue{
+
+        }
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [SMART_POS_VALUE: name]
+    }
+}
+
+dependencies {
+    def dependencies = rootProject.ext.dependencies
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile dependencies.supportLibary
+    testCompile 'junit:junit:4.12'
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
+    compile dependencies.mutidex
+
+    compile dependencies.cardView
+    compile dependencies.cardView
+    compile dependencies.design
+
+    // Retrofit
+    compile dependencies.retrofit
+    compile dependencies.retrofitConvert
+    compile dependencies.retrofitAdapter
+    compile dependencies.retrofitLogging
+    compile dependencies.okhttp3
+
+    // RxJava
+    compile dependencies.rxjava
+    compile dependencies.rxAndroid
+    compile dependencies.rxBinding
+
+    //EventBus
+    compile dependencies.enentBus
+
+    // Glide
+    compile dependencies.glide
+    compile dependencies.glideOkhttpIntegration
+    compile dependencies.glideTransformation
+
+    //Butterknife
+    compile dependencies.butterknife
+    apt dependencies.butterknifeCompile
+
+    //fragmentation
+    compile dependencies.fragmentation
+
+    //Logger
+    compile dependencies.logger
+
+    //BaseRecyclerViewAdapterHelper
+    compile dependencies.bravh
+
+    //bottomSheetView
+    compile dependencies.bottomsheet
+
+    //permissions
+    compile dependencies.permission
+
+    //Bugly
+    compile dependencies.bugly
+
+    //SmartRefreshLayout
+    compile dependencies.smartRefreshLayout
+    compile dependencies.smartRefreshHeader//没有使用特殊Header，可以不加这行
+
+    //分组头部悬停recyclerview
+    compile dependencies.stickHeaderRecyclerView
+
+    //友盟统计
+    compile dependencies.umeng
+
+
+}

@@ -1,0 +1,26 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="BottomSheet.StyleDialog" parent="BottomSheet.Dialog">
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:windowAnimationStyle">@style/BottomSheet.Animation</item>
+        <item name="android:textColorPrimary">#666666</item>
+        <item name="android:textColorSecondary">#999999</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColorHint">#42ffffff</item>
+        <item name="bs_dialogBackground">#ffffff</item>
+        <item name="bs_dividerColor">#ebebeb</item>
+        <item name="bs_numColumns">5</item>
+        <item name="bs_listStyle">@style/BottomSheet.List</item>
+    </style>
+
+
+
+</resources>

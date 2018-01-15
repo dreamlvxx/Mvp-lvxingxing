@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">山大教务系统</string>
+    <string name="dialog_positive">Confirm</string>
+    <string name="dialog_negative">Cancel</string>
+</resources>
