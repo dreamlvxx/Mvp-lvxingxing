@@ -1,2 +1,6 @@
 # MVP-lvxingxing
 mvp开源项目
+这是一款比较完善的Mvp框架，定义了framework，可以实现BaseMvpView，BaseMvpModel，BaseMvpPresenter即可
+其中使用注解动态生成MvpModel，MvpPresenter，不需要手动new
+使用代理模式，管理声明周期，防止了内存泄露
+其中还包括一些utils
