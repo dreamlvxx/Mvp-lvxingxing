@@ -1,7 +1,6 @@
 package com.sbkj.shunbaowallet.mvp_lvxingxing;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 
 import java.util.Stack;
@@ -10,23 +9,25 @@ import java.util.Stack;
  * @author lvxingxing
  * @date 2017/12/14
  *
- * AppManager 管理Activity栈
+ * ActivityManager 管理Activity栈
  */
 
-public class AppManager {
-    private static final String TAG = "AppManager";
-    private static Stack<Activity> activityStack;
-    private static AppManager instance;
+public class ActivityManager {
 
-    private AppManager() {
+
+    private static final String TAG = "ActivityManager";
+    private static Stack<Activity> activityStack;
+    private static ActivityManager instance;
+
+    private ActivityManager() {
     }
 
     /**
      * 单一实例
      */
-    public static AppManager getAppManager() {
+    public static ActivityManager getAppManager() {
         if (instance == null) {
-            instance = new AppManager();
+            instance = new ActivityManager();
         }
         return instance;
     }
@@ -98,8 +99,8 @@ public class AppManager {
     public void AppExit(Context context) {
         try {
             finishAllActivity();
-            ActivityManager activityMgr =
-                    (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            android.app.ActivityManager activityMgr =
+                    (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.killBackgroundProcesses(context.getPackageName());
             System.exit(0);
         } catch (Exception e) {

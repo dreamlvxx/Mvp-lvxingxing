@@ -14,6 +14,7 @@ import com.sbkj.shunbaowallet.mvp_lvxingxing.R;
 
 /**
  * Created by lvxingxing on 2017/12/16.
+ * 可以长时间toast
  *
  * @author lvxingxing
  */

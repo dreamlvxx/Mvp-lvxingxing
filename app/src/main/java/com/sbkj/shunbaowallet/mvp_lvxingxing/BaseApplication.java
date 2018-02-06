@@ -15,8 +15,8 @@ import com.umeng.analytics.MobclickAgent;
  * @author lvxingxing
  */
 
-public class MyApp extends Application {
-    private static final String TAG = "MyApp";
+public class BaseApplication extends Application {
+    private static final String TAG = "BaseApplication";
     private RefWatcher refWatcher;
     private static Context mContext;
     protected static int mainThreadId;
@@ -31,6 +31,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ApplicationManager.init(this);
         //开启调试模式（如果不开启debug运行不会上传umeng统计）
         MobclickAgent.setDebugMode(true);
         MobclickAgent.setCatchUncaughtExceptions(true);
@@ -52,15 +53,20 @@ public class MyApp extends Application {
     }
 
     public static RefWatcher getRefWatcher(Context context) {
-        MyApp leakApplication = (MyApp) context.getApplicationContext();
+        BaseApplication leakApplication = (BaseApplication) context.getApplicationContext();
         return leakApplication.refWatcher;
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return mContext;
     }
 
-    public static int getMainThreadId(){
+    public static int getMainThreadId() {
         return mainThreadId;
+    }
+
+    //在application里保存某些东西
+    public void getSomething() {
+
     }
 }

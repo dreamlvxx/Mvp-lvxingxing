@@ -37,7 +37,9 @@ import butterknife.BindView;
  * @author lvxingxing
  */
 @CreatePresenter(StickHeaderPresenter.class)
-public class StickHeaderActivity extends BaseMvpActivity<StickHeaderContract.IStickHeaderActivity, StickHeaderContract.IStickHeaderModel, StickHeaderContract.IStickHeaderPresenter> implements StickHeaderContract.IStickHeaderActivity {
+public class StickHeaderActivity
+        extends BaseMvpActivity<StickHeaderContract.IStickHeaderActivity, StickHeaderContract.IStickHeaderModel, StickHeaderContract.IStickHeaderPresenter>
+        implements StickHeaderContract.IStickHeaderActivity {
 
     @BindView(R.id.rv_stickActivity)
     RecyclerView mRecyclerView;
@@ -79,10 +81,14 @@ public class StickHeaderActivity extends BaseMvpActivity<StickHeaderContract.ISt
             public void onHeaderClick(View header, int position, long headerId) {
                 TextView tv = (TextView) header.findViewById(R.id.tv11);
 
-                Toast.makeText(StickHeaderActivity.this, "longId id"+headerId+"data is " + tv.getText().toString(),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(StickHeaderActivity.this,
+                        "longId id"+headerId+"data is " + tv.getText().toString(),
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
         });
+
+
         mRecyclerView.addOnItemTouchListener(touchListener);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -90,9 +96,14 @@ public class StickHeaderActivity extends BaseMvpActivity<StickHeaderContract.ISt
                 if (position == 0) {
                     Toast.makeText(StickHeaderActivity.this, "这是header", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(StickHeaderActivity.this, "" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(StickHeaderActivity.this,
+                        "" + adapter.getItem(position),
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
         }));
+
+
     }
 
     @Override

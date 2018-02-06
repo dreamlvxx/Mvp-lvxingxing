@@ -74,10 +74,14 @@ android {
     }
 
     productFlavors{
-        red{
+        baidu{
 
         }
-        blue{
+        xiaomi{
+
+        }
+
+        huawei{
 
         }
     }

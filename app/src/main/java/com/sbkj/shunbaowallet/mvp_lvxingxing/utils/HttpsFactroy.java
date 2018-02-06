@@ -23,7 +23,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 public class HttpsFactroy {
 
-    protected static SSLSocketFactory getSSLSocketFactory(Context context, int[] certificates) {
+    public static SSLSocketFactory getSSLSocketFactory(Context context, int[] certificates) {
         if (context == null) {
             throw new NullPointerException("context == null");
         }
@@ -42,9 +42,10 @@ public class HttpsFactroy {
                     certificate.close();
                 }
             }
-            SSLContext sslContext = SSLContext.getInstance("TLS");
+
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             trustManagerFactory.init(keyStore);
+            SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, trustManagerFactory.getTrustManagers(), new SecureRandom());
             return sslContext.getSocketFactory();
 
@@ -54,7 +55,7 @@ public class HttpsFactroy {
         return null;
     }
 
-    protected static HostnameVerifier getHostnameVerifier(final String[] hostUrls) {
+    public static HostnameVerifier getHostnameVerifier(final String[] hostUrls) {
 
         HostnameVerifier TRUSTED_VERIFIER = new HostnameVerifier() {
 

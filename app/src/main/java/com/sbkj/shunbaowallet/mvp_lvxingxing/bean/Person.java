@@ -1,5 +1,8 @@
 package com.sbkj.shunbaowallet.mvp_lvxingxing.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.R;
 
@@ -9,7 +12,7 @@ import com.sbkj.shunbaowallet.mvp_lvxingxing.R;
  * @author lvxingxing
  */
 
-public class Person implements MultiItemEntity {
+public class Person implements MultiItemEntity, Parcelable {
     private String name;
     private String sex;
     private String id;
@@ -66,4 +69,41 @@ public class Person implements MultiItemEntity {
     public int getItemType() {
         return itemType;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.sex);
+        dest.writeString(this.id);
+        dest.writeInt(this.imageResId);
+        dest.writeInt(this.itemType);
+    }
+
+    public Person() {
+    }
+
+    protected Person(Parcel in) {
+        this.name = in.readString();
+        this.sex = in.readString();
+        this.id = in.readString();
+        this.imageResId = in.readInt();
+        this.itemType = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
+        @Override
+        public Person createFromParcel(Parcel source) {
+            return new Person(source);
+        }
+
+        @Override
+        public Person[] newArray(int size) {
+            return new Person[size];
+        }
+    };
 }

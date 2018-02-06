@@ -27,13 +27,14 @@ import com.sbkj.shunbaowallet.mvp_lvxingxing.presenter.MainPresenter;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.utils.CameraUtils;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.utils.ToastUtil;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.widgets.AdImageView;
-import com.sbkj.shunbaowallet.mvp_lvxingxing.widgets.RvLoadMoreView;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.sbkj.shunbaowallet.mvp_lvxingxing.ApplicationManager.app;
 
 /**
  * Created by lvxingxing on 2017/12/12.
@@ -42,7 +43,9 @@ import butterknife.OnClick;
  */
 
 @CreatePresenter(MainPresenter.class)
-public class MainActivity extends BaseMvpActivity<MainContract.IMainActivity, MainContract.IMainModel, MainContract.IMainPresenter> implements MainContract.IMainActivity, BaseQuickAdapter.RequestLoadMoreListener{
+public class MainActivity
+        extends BaseMvpActivity<MainContract.IMainActivity, MainContract.IMainModel, MainContract.IMainPresenter>
+        implements MainContract.IMainActivity, BaseQuickAdapter.RequestLoadMoreListener {
     private static final String TAG = "MainActivity";
     public RecyclerView mRecyclerView;
 
@@ -62,6 +65,9 @@ public class MainActivity extends BaseMvpActivity<MainContract.IMainActivity, Ma
 
     private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/xingxing.jpg");
 
+
+    private ArrayList<Person> list;
+
     @Override
     protected int layoutResId() {
         return R.layout.activity_main;
@@ -80,8 +86,23 @@ public class MainActivity extends BaseMvpActivity<MainContract.IMainActivity, Ma
             @Override
             public void onClick(View v) {
 
+                app.getSomething();
+
                 clickView();
-                goToActivity(StickHeaderActivity.class);
+                list.clear();
+                for (int i = 0; i < 8; i++) {
+
+                    Person person = new Person();
+                    person.setId(i + "");
+                    person.setName("xx" + i);
+                    person.setSex("boy");
+                    if (i % 5 == 0) {
+                        person.itemType = Person.IMAGE_TYPE;
+                    }
+                    list.add(person);
+                }
+                mMyAdapter.notifyDataSetChanged();
+//                goToActivity(StickHeaderActivity.class);
 //                PermissionUtil.requestPermission(new PermissionUtil.RequestPermission() {
 //                    @Override
 //                    public void onRequestPermissionSuccess() {
@@ -102,7 +123,7 @@ public class MainActivity extends BaseMvpActivity<MainContract.IMainActivity, Ma
             }
         });
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_home);
-        ArrayList<Person> list = new ArrayList<>();
+        list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             Person person = new Person();
             person.setId(i + "");
@@ -114,8 +135,8 @@ public class MainActivity extends BaseMvpActivity<MainContract.IMainActivity, Ma
             list.add(person);
         }
         mMyAdapter = new MyAdapter(list);
-        mMyAdapter.setLoadMoreView(new RvLoadMoreView());
-        mMyAdapter.setOnLoadMoreListener(this, mRecyclerView);
+//        mMyAdapter.setLoadMoreView(new RvLoadMoreView());
+//        mMyAdapter.setOnLoadMoreListener(this, mRecyclerView);
 
         mRecyclerView.setAdapter(mMyAdapter);
         mLinearLayoutManager = new LinearLayoutManager(this);
@@ -181,6 +202,7 @@ public class MainActivity extends BaseMvpActivity<MainContract.IMainActivity, Ma
     @Override
     public void clickView() {
         Toast.makeText(this, "哈哈哈哈啊", Toast.LENGTH_SHORT).show();
+//        OkHttpClient.Builder builder =new OkHttpClient.Builder().socketFactory(HttpsFactroy.getSSLSocketFactory(this,R.drawable.bs_ic_clear));
     }
 
     @Override
@@ -208,7 +230,8 @@ public class MainActivity extends BaseMvpActivity<MainContract.IMainActivity, Ma
                 .listener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int viewId) {
-                        ToastUtil toastUtil3 = new ToastUtil(MainActivity.this, R.layout.toast_msg, "带图片自定义时长toast");
+                        ToastUtil toastUtil3
+                                = new ToastUtil(MainActivity.this, R.layout.toast_msg, "带图片自定义时长toast");
                         toastUtil3.show(5000);
                     }
                 }).build();

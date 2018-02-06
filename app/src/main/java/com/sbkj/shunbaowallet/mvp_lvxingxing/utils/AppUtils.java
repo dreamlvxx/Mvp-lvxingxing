@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.sbkj.shunbaowallet.mvp_lvxingxing.MyApp;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.BaseApplication;
 
 import java.io.File;
 
@@ -30,7 +30,7 @@ public class AppUtils {
      * @return 上下文对象
      */
     public static Context getContext() {
-        return MyApp.getContext();
+        return BaseApplication.getContext();
     }
 
     /**
@@ -39,7 +39,7 @@ public class AppUtils {
      * @return 主线程id
      */
     public static int getMainThreadId() {
-        return MyApp.getMainThreadId();
+        return BaseApplication.getMainThreadId();
     }
 
     /**

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
-import com.sbkj.shunbaowallet.mvp_lvxingxing.AppManager;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.ActivityManager;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.BuildConfig;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.factory.IPresenterMvpFactory;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.factory.PresenterMvpFactoryImpl;
@@ -55,7 +55,7 @@ public abstract class BaseMvpActivity<V extends IBaseMvpView, M extends IBaseMvp
         //初始化butterkniff
         ButterKnife.bind(this);
         //管理所有activity
-        AppManager.getAppManager().addActivity(this);
+        ActivityManager.getAppManager().addActivity(this);
         //执行activity中的一些操作
         viewAction(savedInstanceState);
     }

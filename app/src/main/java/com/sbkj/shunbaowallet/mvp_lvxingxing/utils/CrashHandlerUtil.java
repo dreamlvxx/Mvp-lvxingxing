@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.sbkj.shunbaowallet.mvp_lvxingxing.AppManager;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.ActivityManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -112,7 +112,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
                 e.printStackTrace();
             }
             //退出程序
-            AppManager.getAppManager().AppExit(mContext);
+            ActivityManager.getAppManager().AppExit(mContext);
         }
     }
 
