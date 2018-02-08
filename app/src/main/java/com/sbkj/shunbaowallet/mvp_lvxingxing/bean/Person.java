@@ -12,7 +12,7 @@ import com.sbkj.shunbaowallet.mvp_lvxingxing.R;
  * @author lvxingxing
  */
 
-public class Person implements MultiItemEntity, Parcelable {
+public class Person implements MultiItemEntity, Parcelable  {
     private String name;
     private String sex;
     private String id;

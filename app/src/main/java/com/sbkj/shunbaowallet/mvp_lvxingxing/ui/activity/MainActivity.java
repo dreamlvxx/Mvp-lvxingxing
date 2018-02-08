@@ -23,6 +23,8 @@ import com.sbkj.shunbaowallet.mvp_lvxingxing.bean.Person;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.contract.MainContract;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.annotation.CreatePresenter;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.mvp.BaseMvpActivity;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.network.BaseEntity;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.network.HttpUtils;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.presenter.MainPresenter;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.utils.CameraUtils;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.utils.ToastUtil;
@@ -33,8 +35,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.sbkj.shunbaowallet.mvp_lvxingxing.ApplicationManager.app;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by lvxingxing on 2017/12/12.
@@ -86,7 +88,28 @@ public class MainActivity
             @Override
             public void onClick(View v) {
 
-                app.getSomething();
+                HttpUtils.getInstance().Api().getJson2().subscribe(new Observer<BaseEntity<Person>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<Person> value) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
 
                 clickView();
                 list.clear();
@@ -202,7 +225,6 @@ public class MainActivity
     @Override
     public void clickView() {
         Toast.makeText(this, "哈哈哈哈啊", Toast.LENGTH_SHORT).show();
-//        OkHttpClient.Builder builder =new OkHttpClient.Builder().socketFactory(HttpsFactroy.getSSLSocketFactory(this,R.drawable.bs_ic_clear));
     }
 
     @Override
