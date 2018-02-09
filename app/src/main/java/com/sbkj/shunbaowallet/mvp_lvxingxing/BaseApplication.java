@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.orhanobut.hawk.Hawk;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.utils.CrashHandlerUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -31,6 +32,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Hawk.init(this).build();
         ApplicationManager.init(this);
         //开启调试模式（如果不开启debug运行不会上传umeng统计）
         MobclickAgent.setDebugMode(true);

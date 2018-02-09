@@ -161,5 +161,10 @@ dependencies {
     //友盟统计
     compile dependencies.umeng
 
+    //hawk数据库
+    compile dependencies.hawk
 
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
+
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }

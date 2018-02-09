@@ -14,9 +14,11 @@ import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.factory.IPresenterMvpFact
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.factory.PresenterMvpFactoryImpl;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.proxy.BaseMvpProxy;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.proxy.IBaseMvpPresenterProxy;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.network.ActivityLifeCycleEvent;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by lvxingxing on 2017/12/12.
@@ -32,12 +34,15 @@ public abstract class BaseMvpActivity<V extends IBaseMvpView, M extends IBaseMvp
      */
     private BaseMvpProxy<V, M, P> mProxy;
 
+    public final PublishSubject<ActivityLifeCycleEvent> lifecycleSubject = PublishSubject.create();
+
     /**
      * 万一用户要重写onCreate  ，也必须继承父类的才行
      */
     @CallSuper
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.CREATE);
         super.onCreate(savedInstanceState);
         setContentView(layoutResId());
         mProxy = new BaseMvpProxy<>(PresenterMvpFactoryImpl.<V, M, P>createFactory(getClass()));
@@ -86,15 +91,23 @@ public abstract class BaseMvpActivity<V extends IBaseMvpView, M extends IBaseMvp
     @CallSuper
     @Override
     protected void onPause() {
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.PAUSE);
         super.onPause();
         MobclickAgent.onPageEnd(this.getClass().getName());
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onStop() {
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.STOP);
+        super.onStop();
     }
 
     @CallSuper
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.DESTROY);
         mProxy.onDestroy();
     }
 
@@ -125,10 +138,11 @@ public abstract class BaseMvpActivity<V extends IBaseMvpView, M extends IBaseMvp
 
     /**
      * @param clz 要跳转的activity
+     *            不可以被重写
      */
     @CallSuper
-    public void goToActivity(Class<?> clz) {
-        startActivity(new Intent(BaseMvpActivity.this,clz));
+    public final void goToActivity(Class<?> clz) {
+        startActivity(new Intent(BaseMvpActivity.this, clz));
     }
 
     /**

@@ -8,7 +8,7 @@ package com.sbkj.shunbaowallet.mvp_lvxingxing.network;
  * Entity基类
  */
 
-public class BaseEntity<T> {
+public class HttpResult<T> {
     private int code;
     private String msg;
     private T data;

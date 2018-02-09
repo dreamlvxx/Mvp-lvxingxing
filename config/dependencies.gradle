@@ -40,6 +40,7 @@ ext{
     loggerVersion = '2.1.1'
     buglyVersion = 'latest.release'
     stickyheadersrecyclerviewVersion = 'library:[0.4.3]@aar'
+    hawkVersion = '2.0.0-Alpha'
 
 
     dependencies=[
@@ -71,7 +72,7 @@ ext{
             smartRefreshLayout : "com.scwang.smartrefresh:SmartRefreshLayout:$smartrefreshVersion",
             smartRefreshHeader : "com.scwang.smartrefresh:SmartRefreshHeader:$smartrefreshVersion",
             stickHeaderRecyclerView : "com.timehop.stickyheadersrecyclerview:$stickyheadersrecyclerviewVersion",
-            umeng : "com.umeng.analytics:analytics:latest.integration"
-
+            umeng : "com.umeng.analytics:analytics:latest.integration",
+            hawk : "com.orhanobut:hawk:$hawkVersion"
     ]
 }

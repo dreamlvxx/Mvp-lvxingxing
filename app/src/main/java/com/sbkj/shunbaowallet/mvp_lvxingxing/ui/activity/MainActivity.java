@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cocosw.bottomsheet.BottomSheet;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.orhanobut.logger.Logger;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.R;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.adapter.MyAdapter;
@@ -23,8 +24,10 @@ import com.sbkj.shunbaowallet.mvp_lvxingxing.bean.Person;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.contract.MainContract;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.annotation.CreatePresenter;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.framework.mvp.BaseMvpActivity;
-import com.sbkj.shunbaowallet.mvp_lvxingxing.network.BaseEntity;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.network.ActivityLifeCycleEvent;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.network.Api;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.network.HttpUtils;
+import com.sbkj.shunbaowallet.mvp_lvxingxing.network.ProgressSubscriber;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.presenter.MainPresenter;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.utils.CameraUtils;
 import com.sbkj.shunbaowallet.mvp_lvxingxing.utils.ToastUtil;
@@ -35,8 +38,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.Observable;
 
 /**
  * Created by lvxingxing on 2017/12/12.
@@ -69,6 +71,11 @@ public class MainActivity
 
 
     private ArrayList<Person> list;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient mClient;
 
     @Override
     protected int layoutResId() {
@@ -88,28 +95,18 @@ public class MainActivity
             @Override
             public void onClick(View v) {
 
-                HttpUtils.getInstance().Api().getJson2().subscribe(new Observer<BaseEntity<Person>>() {
+                Observable observable = Api.getDefault().getBaseData();
+                HttpUtils.getInstance().toSubscribe(observable, new ProgressSubscriber<Person>(MainActivity.this) {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    protected void onSuccess(Person person) {
 
                     }
 
                     @Override
-                    public void onNext(BaseEntity<Person> value) {
+                    protected void onDoError(String message) {
 
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
+                }, "person", ActivityLifeCycleEvent.DESTROY, lifecycleSubject, false, false);
 
                 clickView();
                 list.clear();
@@ -125,7 +122,7 @@ public class MainActivity
                     list.add(person);
                 }
                 mMyAdapter.notifyDataSetChanged();
-//                goToActivity(StickHeaderActivity.class);
+                goToActivity(StickHeaderActivity.class);
 //                PermissionUtil.requestPermission(new PermissionUtil.RequestPermission() {
 //                    @Override
 //                    public void onRequestPermissionSuccess() {
@@ -279,4 +276,11 @@ public class MainActivity
             mImageView.setImageBitmap(bitmap);
         }
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
 }
