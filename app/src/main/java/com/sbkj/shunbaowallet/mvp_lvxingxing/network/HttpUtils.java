@@ -41,8 +41,8 @@ public class HttpUtils {
         OkHttpClient mOkHttpClient = new OkHttpClient.Builder().build();
         return new Retrofit.Builder()
                 .baseUrl("http://ww.xxlibili.com:8009")
-                .addConverterFactory(GsonConverterFactory.create())//添加gson转换器
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加rxjava转换器
+                .addConverterFactory(GsonConverterFactory.create()) //添加gson转换器
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //添加rxjava转换器
                 .client(mOkHttpClient)
                 .build()
                 .create(ApiServices.class);
@@ -61,7 +61,7 @@ public class HttpUtils {
      */
     public <T>void toSubscribe(Observable ob, final ProgressSubscriber<T> subscriber, String cacheKey, final ActivityLifeCycleEvent event, final PublishSubject<ActivityLifeCycleEvent> lifecycleSubject, boolean isSave, boolean forceRefresh) {
         //数据预处理
-        ObservableTransformer<HttpResult<Object>, Object> result = RxHelper.handleResult(event, lifecycleSubject);
+        ObservableTransformer<HttpResult<T>, T> result = RxHelper.handleResult(event, lifecycleSubject);
         Observable observable =
                 ob.compose(result)
                         .doOnSubscribe(new Consumer<Disposable>() {
