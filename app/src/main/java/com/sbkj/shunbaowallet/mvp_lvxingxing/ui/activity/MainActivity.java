@@ -88,6 +88,18 @@ public class MainActivity
         if (savedInstanceState != null) {
 
         }
+        Observable personObservable = Api.getDefault().getBaseData();
+        HttpUtils.getInstance().toSubscribe(personObservable, new ProgressSubscriber<Person>(MainActivity.this) {
+            @Override
+            protected void onSuccess(Person personHttpResult) {
+
+            }
+
+            @Override
+            protected void onDoError(String message) {
+
+            }
+        },"cacheKey", ActivityLifeCycleEvent.DESTROY, lifecycleSubject, false, false);
 
         Logger.d(getMvpPresenter());
         getMvpPresenter().method3();
